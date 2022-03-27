@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
+import static java.lang.Thread.sleep;
+
 @RequiredArgsConstructor
 @Service
 public class ChatService {
@@ -40,6 +42,11 @@ public class ChatService {
 
 
         if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
             chatMessage.setSender("[알림]");
 
