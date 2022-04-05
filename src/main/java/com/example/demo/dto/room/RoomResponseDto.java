@@ -33,7 +33,7 @@ public class RoomResponseDto {
         this.roomId = roomId;
         this.roomImg = roomImg;
         this.content = content;
-        this.userCount = userCount < 0 ? 0 : userCount;
+        this.userCount = userCount;
         this.passCheck = passCheck;
         this.workOut = workOut;
         this.nickname = nickname;
