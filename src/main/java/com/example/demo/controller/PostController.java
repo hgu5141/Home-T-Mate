@@ -1,12 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.S3Uploader;
-import com.example.demo.dto.ContentRequestDto;
-import com.example.demo.dto.PostsDeleteRequestDto;
+import com.example.demo.dto.postsdto.PostsDeleteRequestDto;
 import com.example.demo.dto.postsdto.PostCreateResponseDto;
-import com.example.demo.dto.postsdto.PostRequestDto;
 import com.example.demo.dto.postsdto.PostResponseDto;
-import com.example.demo.model.Post;
 import com.example.demo.model.Response;
 import com.example.demo.model.User;
 import com.example.demo.security.UserDetailsImpl;
@@ -37,17 +34,21 @@ public class PostController {
     }
 
 
+    @GetMapping("/api/posts/myposts")
+    public ResponseEntity<List<PostResponseDto>> getMyPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        return ResponseEntity.ok().body(postService.getMyPosts(user));
+    }
+
     // 게시글 작성
     @PostMapping("/api/posts")
-    public PostCreateResponseDto createpost(@RequestPart(value = "content") String content,
+    public ResponseEntity<PostCreateResponseDto> createpost(@RequestPart(value = "content") String content,
                                                         @RequestPart(value = "imageUrl", required = false) List<MultipartFile> multipartFile,
                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException
     {
         User user = userDetails.getUser();
         PostCreateResponseDto postCreateResponseDto =  postService.createPost(content, multipartFile, user);
-
-
-        return postCreateResponseDto;
+        return ResponseEntity.ok().body(postCreateResponseDto);
     }
 
 
@@ -65,13 +66,13 @@ public class PostController {
 
     // 게시글 하나 삭제
     @DeleteMapping("/api/posts/{postId}")
-    public Response deletePost(@PathVariable Long postId,
+    public ResponseEntity<Response> deletePost(@PathVariable Long postId,
                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
         postService.deletePost(postId, userDetails);
 
         Response response = new Response();
         response.setResult(true);
-        return response;
+        return ResponseEntity.ok().body(response);
     }
 
     // 게시글 여러개 삭제
