@@ -3,8 +3,7 @@ package com.example.demo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -16,4 +15,11 @@ public class TodolistRequestDto {
     private String start;
     private String end;
     private String time;
+
+    @Getter
+    @Setter
+    public static class Response
+    {
+        private Boolean result;
+    }
 }

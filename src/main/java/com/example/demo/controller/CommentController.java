@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.TodolistRequestDto;
 import com.example.demo.dto.commentdto.CommentIdDto;
 import com.example.demo.dto.commentdto.CommentRequestDto;
 import com.example.demo.dto.commentdto.CommentResponseDto;
-import com.example.demo.model.Comment;
-import com.example.demo.model.Response;
 import com.example.demo.security.UserDetailsImpl;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-
     // 댓글 조회
     @GetMapping("/api/comments/{postId}")
     public List<CommentResponseDto> getComment(@PathVariable Long postId)
@@ -43,11 +41,11 @@ public class CommentController {
 
     // 댓글 삭제
     @DeleteMapping("/api/comments/{postId}/{commentId}")
-    public Response deleteComment(@PathVariable Long commentId,
-                                  @AuthenticationPrincipal UserDetailsImpl userDetails
+    public TodolistRequestDto.Response deleteComment(@PathVariable Long commentId,
+                                                     @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         commentService.deleteComment(commentId, userDetails);
-        Response response = new Response();
+        TodolistRequestDto.Response response = new TodolistRequestDto.Response();
         response.setResult(true);
         return response;
     }

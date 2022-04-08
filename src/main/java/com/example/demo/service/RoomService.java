@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class RoomService {
     private final int LIMIT = 5;
 
     //방 생성
+    @Transactional
     public RoomResponseDto createRoom(RoomRequestDto requestDto, User user) {
 
         if (requestDto.getRoomImg() == null) {
@@ -60,6 +62,7 @@ public class RoomService {
 
 
     //방 진입
+    @Transactional
     public List<EnterUserResponseDto> enterRoom(String roomId, RoomPassRequestDto requestDto, User user) {
 
         Room room = roomRepository.findByroomId(roomId).orElseThrow(
@@ -115,7 +118,6 @@ public class RoomService {
     public RoomResponseDto getRoom(RoomRequestDto requestDto) {
         Room room = roomRepository.findByroomId(requestDto.getRoomId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 방이 존재하지 않습니다."));
-
         if(room.getPassCheck()) {
             if (!room.getPassword().equals(requestDto.getPassword())) {
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
@@ -143,10 +145,10 @@ public class RoomService {
 
 
 
+    @Transactional
     public void deleteRoom(String roomId, User user) {
 
         Room room = roomRepository.findByroomId(roomId).orElseThrow(() -> new IllegalArgumentException("해당 방이 존재하지 않습니다."));
-
 
         if(!room.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("방을 만든 유저만 삭제할 수 있습니다.");
@@ -155,7 +157,6 @@ public class RoomService {
         if(enterUserRepository.findByRoom(room) != null) {
             throw new IllegalArgumentException("모든 유저가 퇴장 후 방을 삭제할 수 있습니다.");
         }
-
         roomRepository.delete(room);
     }
 

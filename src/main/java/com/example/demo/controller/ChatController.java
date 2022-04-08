@@ -39,6 +39,5 @@ public class ChatController {
         message.setUserCount(redisRepository.getUserCount(message.getRoomId()));
         chatMessageRepository.save(message);
         chatService.sendChatMessage(message);
-
     }
 }

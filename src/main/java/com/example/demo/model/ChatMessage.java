@@ -12,27 +12,6 @@ import javax.persistence.*;
 @Entity
 public class ChatMessage {
 
-
-    public ChatMessage() {
-    }
-
-    @Builder
-    public ChatMessage(MessageType type, String roomId, String sender, String message, long userCount, String profileImg) {
-        this.type = type;
-        this.roomId = roomId;
-        this.sender = sender;
-        this.message = message;
-        this.userCount = userCount;
-        this.profileImg = profileImg;
-    }
-
-
-
-    // 메시지 타입 : 입장, 퇴장, 채팅
-    public enum MessageType {
-        ENTER, QUIT, TALK, YOUTUBEURL, YOUTUBEON, YOUTUBEPAUSE, YOUTUBESTOP, VIDEOON, VIDEOOFF
-    }
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -54,4 +33,23 @@ public class ChatMessage {
     private String profileImg;
 
 
+    public ChatMessage() {
+    }
+
+    @Builder
+    public ChatMessage(MessageType type, String roomId, String sender, String message, long userCount, String profileImg) {
+        this.type = type;
+        this.roomId = roomId;
+        this.sender = sender;
+        this.message = message;
+        this.userCount = userCount;
+        this.profileImg = profileImg;
+    }
+
+
+
+    // 메시지 타입 : 입장, 퇴장, 채팅
+    public enum MessageType {
+        ENTER, QUIT, TALK, YOUTUBEURL, YOUTUBEON, YOUTUBEPAUSE, YOUTUBESTOP, VIDEOON, VIDEOOFF
+    }
 }

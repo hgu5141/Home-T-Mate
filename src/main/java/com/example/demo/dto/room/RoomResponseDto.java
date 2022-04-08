@@ -17,7 +17,7 @@ public class RoomResponseDto {
     private String profileImg;
 
 
-    public RoomResponseDto(String name, String roomId, String roomImg, String content,Long userCount, Boolean passCheck,Boolean workOut) {
+    public RoomResponseDto(String name, String roomId, String roomImg, String content, Long userCount, Boolean passCheck, Boolean workOut, String nickname, String profileImg) {
         this.name = name;
         this.roomId = roomId;
         this.roomImg = roomImg;
@@ -25,19 +25,7 @@ public class RoomResponseDto {
         this.userCount = userCount;
         this.passCheck = passCheck;
         this.workOut = workOut;
-
-    }
-
-    public RoomResponseDto(String name, String roomId, String roomImg, String content, Long userCount, Boolean passCheck, Boolean workOut, String nickname, String profileImg) {
-        this.name = name;
-        this.roomId = roomId;
-        this.roomImg = roomImg;
-        this.content = content;
-        this.userCount = userCount < 0 ? 0 : userCount;
-        this.passCheck = passCheck;
-        this.workOut = workOut;
         this.nickname = nickname;
         this.profileImg = profileImg;
     }
-
 }

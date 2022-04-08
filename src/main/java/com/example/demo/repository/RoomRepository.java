@@ -17,7 +17,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Page<Room> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-
     List<Room> findByUser(User user);
 
     List<Room> findByNameContainingIgnoreCase(String keyword);

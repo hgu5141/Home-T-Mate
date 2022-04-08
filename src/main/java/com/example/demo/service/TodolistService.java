@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ public class TodolistService {
     private final TodolistRepository todolistRepository;
 
     //Todolist 추가하기
+    @Transactional
     public Todolist createlist(TodolistRequestDto requestDto, User user){
         Todolist todolist = new Todolist(requestDto, user);
         todolist.setTitle(requestDto.getTitle());
@@ -29,11 +31,10 @@ public class TodolistService {
     }
 
     //Todolist 수정하기
+    @Transactional
     public Todolist updatelist(Long id, TodolistRequestDto requestDto){
         Todolist todolist = todolistRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-
         if(requestDto.getTitle() != null){
             todolist.setTitle(requestDto.getTitle());
         }
@@ -51,12 +52,14 @@ public class TodolistService {
 
 
     //Todolist 목록 전체 조회
+    @Transactional
     public List<Todolist> getlist(Long userId){
         return todolistRepository.findAllByUserId(userId);
     }
 
 
     //Todolist 삭제하기
+    @Transactional
     public void deletelist(Long id){
         todolistRepository.deleteById(id);
     }

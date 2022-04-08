@@ -31,13 +31,12 @@ import java.util.Objects;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
-    private final LikeRepository likeRepository;
     private final S3Uploader s3Uploader;
     private final PhotoRepository photoRepository;
 
 
     // 게시글 전체 조회
+    @Transactional
     public List<PostResponseDto> getPost(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -50,7 +49,6 @@ public class PostService {
             List<CommentUserDto> commentUserDtos = new ArrayList<>();
             List<LikeUserDto> likeUserDtos = new ArrayList<>();
             List<PhotoResponseDto> photoResponseDtos = new ArrayList<>();
-
 
             for (Like like : post.getLikes()) {
                 LikeUserDto likeUserDto = new LikeUserDto(like);
@@ -89,6 +87,7 @@ public class PostService {
 
 
     //내가 작성한 게시글 조회
+    @Transactional
     public List<PostResponseDto> getMyPosts(User user) {
         List<Post> posts = postRepository.findByUser(user);
 
