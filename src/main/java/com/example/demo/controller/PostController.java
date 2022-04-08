@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.S3Uploader;
+import com.example.demo.dto.TodolistRequestDto;
 import com.example.demo.dto.postsdto.PostsDeleteRequestDto;
 import com.example.demo.dto.postsdto.PostCreateResponseDto;
 import com.example.demo.dto.postsdto.PostResponseDto;
-import com.example.demo.model.Response;
 import com.example.demo.model.User;
 import com.example.demo.security.UserDetailsImpl;
 import com.example.demo.service.PostService;
@@ -66,11 +66,11 @@ public class PostController {
 
     // 게시글 하나 삭제
     @DeleteMapping("/api/posts/{postId}")
-    public ResponseEntity<Response> deletePost(@PathVariable Long postId,
-                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<TodolistRequestDto.Response> deletePost(@PathVariable Long postId,
+                                                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         postService.deletePost(postId, userDetails);
 
-        Response response = new Response();
+        TodolistRequestDto.Response response = new TodolistRequestDto.Response();
         response.setResult(true);
         return ResponseEntity.ok().body(response);
     }

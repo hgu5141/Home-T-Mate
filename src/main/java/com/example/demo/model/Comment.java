@@ -30,7 +30,7 @@ public class Comment extends Timestamped {
     private User user;
 
     // 게시글
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     private Post post;
 
